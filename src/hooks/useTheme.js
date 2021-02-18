@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import storage from 'local-storage-fallback';
+import { themeMode } from '../config'
 
-const useTheme = (defaultTheme = { mode: `dark` }) => {
+const useTheme = (defaultTheme = themeMode.dark) => {
 
     const [theme, _setTheme] = useState(getInitialTheme)
 
@@ -17,11 +18,12 @@ const useTheme = (defaultTheme = { mode: `dark` }) => {
 
     useEffect(() => {
         storage.setItem('theme', JSON.stringify(theme))
-    }, [theme])
+    }, [theme]);
 
-    const setTheme = ({ setTheme, ...theme }) => _setTheme(theme)
-
-    return [theme, setTheme]
+    return {
+        ...theme,
+        setTheme: ({ setTheme, ...theme }) => _setTheme(theme)
+    }
 }
 
 export default useTheme;

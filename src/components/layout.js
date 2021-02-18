@@ -4,21 +4,22 @@ import styled, { ThemeProvider } from 'styled-components';
 import SEO from './seo';
 import { useTheme } from '../hooks';
 import { GlobalStyle } from '../styles';
-import { themes } from '../config'
+import { themes } from '../config';
+import Nav from '../components/nav'
 
 const MainContainer = styled.div`
-    display: flex;
-    align-items: center;
-    min-height: 100vh;
-    justify-content: center;
+    width: 100%;
 `;
 
 const StyledContentContainer = styled.div``;
-const StyledContent = styled.div``;
+const StyledContent = styled.div`
+    display: flex;
+    padding-top: 150px;
+`;
 
 
 const MainLayout = ({ children }) => {
-    const [theme] = useTheme();
+    const theme = useTheme();
 
     return (
         <ThemeProvider theme={
@@ -32,6 +33,7 @@ const MainLayout = ({ children }) => {
                 <MainContainer>
                     <SEO />
                     <StyledContentContainer>
+                        <Nav />
                         <StyledContent>
                             {children}
                         </StyledContent>

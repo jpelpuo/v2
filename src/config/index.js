@@ -47,11 +47,23 @@ module.exports = {
             fontColor: `#bbe1fa`,
             mode: `dark`
         },
-        lightTheme : {
+        lightTheme: {
             backgroundColor: `#ffffff`,
             accentColor: `#3282b8`,
-            fontColor: `#bbe1fa`,
+            fontColor: `#333333`,
             mode: `light`
         }
+    },
+    themeMode: {
+        dark: {
+            mode: `dark`
+        },
+        light: {
+            mode: `light`
+        }
+    },
+    scrollDirection: {
+        up: 'up',
+        down: 'down'
     }
 }
