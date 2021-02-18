@@ -18,6 +18,19 @@ const mixins = {
         height: 10px;
         position: relative;
     `,
+
+    link: css`
+        display: inline-block;
+        text-decoration: none;
+        color: inherit;
+        
+
+        &:active,
+        &:hover,
+        &:focus {
+            background-color: red;
+        }
+    `,
 }
 
 export default mixins;

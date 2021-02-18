@@ -4,7 +4,8 @@ import Toggle from 'react-toggle';
 import { themeMode } from '../config';
 import { mixins } from '../styles'
 import useScrollDirection from '../hooks/useScrollDirection';
-import Menu from './menu';
+import Menu from './side-menu';
+import { navLinks } from '../config';
 
 
 const StyledTopNav = styled.div`
@@ -17,6 +18,7 @@ const StyledTopNav = styled.div`
     width: 100%;
     z-index: 11;
     padding: 0 20px;
+    flex-direction: row;
     
     ${props =>
         !props.scrolledToTop && props.scrollDirection === `down` && css`
@@ -26,16 +28,54 @@ const StyledTopNav = styled.div`
     }
 `;
 
+
 const StyledNav = styled.nav`
-    ${mixins.flexBetween}
+    flex-flow: row nowrap;
+    text-align: center;
+    height: 100%;
+`;
+
+const StyledTopNavLinks = styled.div`
     width: 100%;
-    postion: relative;
-    z-index: 12;
+    height: 100%;
+    // background-color: green;
+`;
+
+const StyledListItem = styled.li`
+    margin: 0 auto;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: right;
+`;
+
+const StyledNavLink = styled.a`
+    ${mixins.link};
+    ${mixins.flexCenter};
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    text-align: right;
+`;
+
+const StyledList = styled.ul`
+    ${mixins.flexBetween};
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    height: 100%;
+`;
+
+const LogoPlaceholder = styled.div`
+    width: 20%;
+    height: 100%;
+    ${mixins.flexCenter};
 `;
 
 const DarkModeIcon = styled.span`
-    ${mixins.flexCenter}
-    ${mixins.iconDimensions}
+    ${mixins.flexCenter};
+    ${mixins.iconDimensions};
 
     &:before {
         content: '🌜️'
@@ -43,16 +83,17 @@ const DarkModeIcon = styled.span`
 `;
 
 const LightModeIcon = styled.span`
-    ${mixins.flexCenter}
-    ${mixins.iconDimensions}
+    ${mixins.flexCenter};
+    ${mixins.iconDimensions};
 
     &:after {
         content: '🌞️'
     }
 `;
 
+
 const Nav = ({ theme }) => {
-    const [scrolledToTop, setScrolledToTop] = useState(false);
+    const [scrolledToTop, setScrolledToTop] = useState(true);
     const scrollDir = useScrollDirection('down');
 
     // If page is scrolled by more than 50 pixels from the top
@@ -72,9 +113,6 @@ const Nav = ({ theme }) => {
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
-        // console.log(scrolledToTop)
-        // console.log(scrollDir)
-
         return () => {
             window.removeEventListener('scroll', handleScroll)
         }
@@ -87,20 +125,30 @@ const Nav = ({ theme }) => {
             scrolledToTop={scrolledToTop}
             scrollDirection={scrollDir}
         >
-            <StyledNav>
-                <Toggle
-                    defaultChecked={theme.mode === `dark`}
-                    className='theme-toggler'
-                    icons={{
-                        checked: <DarkModeIcon />,
-                        unchecked: <LightModeIcon />
-                    }}
-                    onChange={() => toggleTheme(theme)}
-                />
-                <div>
-                    <Menu />
-                </div>
-            </StyledNav>
+            <LogoPlaceholder>Jamal Pelpuo</LogoPlaceholder>
+            <StyledTopNavLinks>
+                <StyledNav>
+                    <StyledList>
+                        {
+                            navLinks.map(({ text, url }, index) => (
+                                <StyledListItem key={index}>
+                                    <StyledNavLink href={url}>{text}</StyledNavLink>
+                                </StyledListItem>
+                            ))
+                        }
+                    </StyledList>
+                </StyledNav>
+            </StyledTopNavLinks>
+            <Menu />
+            <Toggle
+                defaultChecked={theme.mode === `dark`}
+                className='theme-toggler'
+                icons={{
+                    checked: <DarkModeIcon />,
+                    unchecked: <LightModeIcon />
+                }}
+                onChange={() => toggleTheme(theme)}
+            />
         </StyledTopNav>
     );
 }

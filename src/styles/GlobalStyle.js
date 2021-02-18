@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
         --nav-height: 100px;
         --nav-scroll-height: 70px;
 
+        --side-nav-width: min(70vw, 400px);
 
     }
 
